@@ -1,5 +1,8 @@
-## Tetris
+# Tetris React
 
-## Contributers
+A tetris game built with Javascript for use in the browser.
 
-curtis rodgers (me)
+
+### Contributors
+
+Curtis Rodgers (me) : https://curtisrodgers.com
