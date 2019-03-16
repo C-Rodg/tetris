@@ -4,9 +4,10 @@ import React, { Component } from 'react';
 import GridItem from './GridItem';
 
 // Board
-const boardSize = 12;
+const boardRows = 20;
+const boardCols = 10;
 const generateEmptyBoard = () =>
-	new Array(boardSize).fill(new Array(boardSize).fill(0));
+	new Array(boardRows).fill(new Array(boardCols).fill(0));
 
 // Pieces
 // TODO: Generate pieces
@@ -34,15 +35,15 @@ const piece_Square = () => {
 // piece_L
 // [0, 0, 1, 0, 0]
 // [0, 0, 1, 0, 0]
-// [0, 0, 1, 0, 0]
-// [0, 1, 1, 0, 0]
+// [0, 0, 1, 1, 0]
+// [0, 0, 0, 0, 0]
 // [0, 0, 0, 0, 0]
 const piece_L = () => {
 	return [
 		[0, 0, 1, 0, 0],
 		[0, 0, 1, 0, 0],
-		[0, 0, 1, 0, 0],
-		[0, 1, 1, 0, 0],
+		[0, 0, 1, 1, 0],
+		[0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0]
 	];
 };
@@ -52,20 +53,20 @@ const piece_L = () => {
 // [0, 0, 1, 0, 0]
 // [0, 0, 1, 0, 0]
 // [0, 0, 1, 0, 0]
-// [0, 0, 1, 0, 0]
+// [0, 0, 0, 0, 0]
 const piece_Vertical = () => {
 	return [
 		[0, 0, 1, 0, 0],
 		[0, 0, 1, 0, 0],
 		[0, 0, 1, 0, 0],
 		[0, 0, 1, 0, 0],
-		[0, 0, 1, 0, 0]
+		[0, 0, 0, 0, 0]
 	];
 };
 
 // piece_ZigZag
+// [0, 0, 1, 1, 0]
 // [0, 1, 1, 0, 0]
-// [1, 1, 0, 0, 0]
 // [0, 0, 0, 0, 0]
 // [0, 0, 0, 0, 0]
 // [0, 0, 0, 0, 0]
@@ -123,6 +124,9 @@ class Board extends Component {
 		return <div className="Board">{this.renderBoardItems()}</div>;
 	}
 }
+
+// Thoughts... do I need react?
+// Move to using canvas instead of divs...
 
 // **** ---- GAME LOOP **** //
 // 1.) Get Piece and place at top of board

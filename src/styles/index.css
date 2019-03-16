@@ -28,7 +28,7 @@ body {
 
 .GridItem {
 	border: 1px solid #fff;
-	width: calc(100% / 12);
+	width: calc(100% / 10);
 }
 
 .GridItem.filled {
