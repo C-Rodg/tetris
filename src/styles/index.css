@@ -16,14 +16,21 @@ body {
 
 .App {
 	height: 100vh;
-	background-color: #0b0b23;
+	display: flex;
 }
 
 .Board {
+	background-color: #0b0b23;
 	height: calc(100% - 2px);
 	border: 1px solid white;
 	display: flex;
 	flex-wrap: wrap;
+	width: 80%;
+}
+
+.Dashboard {
+	width: 20%;
+	background-color: lightblue;
 }
 
 .GridItem {
