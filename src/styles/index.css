@@ -33,11 +33,7 @@ body {
 	background-color: lightblue;
 }
 
-.GridItem {
-	border: 1px solid #fff;
-	width: calc(100% / 10);
-}
-
-.GridItem.filled {
-	background-color: #bf4545;
+.Board canvas {
+	width: 100%;
+	height: 100%;
 }

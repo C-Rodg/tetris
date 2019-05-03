@@ -1,7 +1,6 @@
 # Tetris React
 
-A tetris game built with Javascript for use in the browser.
-
+A tetris game built with Javascript & React for use in the browser.
 
 ### Contributors
 
