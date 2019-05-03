@@ -6,11 +6,14 @@ import Board from './Board';
 import Dashboard from './Dashboard';
 
 class App extends Component {
+	state = {
+		gameStarted: false
+	};
 	render() {
 		return (
 			<div className="App">
-				<Board />
-				<Dashboard />
+				<Board gameStarted={this.state.gameStarted} />
+				<Dashboard onStartGame={() => this.setState({ gameStarted: true })} />
 			</div>
 		);
 	}
