@@ -42,4 +42,19 @@ const I_PIECE = [
 	[[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]]
 ];
 
-const BLOCK_PIECE = [[[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]];
+const O_PIECE = [[[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]];
+
+const TETRI = [
+	[S_PIECE, 'green'],
+	[Z_PIECE, 'blue'],
+	[I_PIECE, 'cyan'],
+	[O_PIECE, 'purple'],
+	[L_PIECE, 'orange'],
+	[T_PIECE, 'red'],
+	[J_PIECE, 'yellow']
+];
+
+export const getRandomTetriMonad = () => {
+	const randomInt = Math.floor(Math.random() * TETRI.length);
+	return TETRI[randomInt];
+};

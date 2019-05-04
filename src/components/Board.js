@@ -2,40 +2,88 @@
 import React, { Component } from 'react';
 
 class Board extends Component {
-	state = {
-		squareSize: 0
-	};
+	EMPTY = 'white';
 	NUM_ROWS = 20;
 	NUM_COLS = 10;
+	SQUARE_SIZE = 0;
 	ctx = null;
+	board = [];
+	dropDate = null;
+	currentPiece = null;
+
 	constructor(props) {
 		super(props);
-		this.boardWrapper = React.createRef();
-		this.board = React.createRef();
+		this.boardWrapperRef = React.createRef();
+		this.boardRef = React.createRef();
 	}
 
-	componentDidMount() {
-		// TODO: TESTING
-		window.CTX = this.ctx;
-	}
-
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps, prevState) {
 		// Calculate board dimensions on game start
 		if (!prevProps.gameStarted && this.props.gameStarted) {
 			this.calculateSquareDimensions();
+			this.generateBoardArray();
+			this.drawBoard();
+			this.startGame();
+			// TODO: TESTING
+			window.CTX = this.ctx;
 		}
 	}
 
+	// Start the game
+	startGame = () => {
+		this.dropDate = Date.now();
+		this.drop();
+	};
+
+	drop = () => {
+		const now = Date.now();
+		const delta = now - this.dropDate;
+		if (delta > 1000) {
+			// p.moveDown
+			this.dropDate = Date.now();
+		}
+		// if game !== over
+		requestAnimationFrame(this.drop);
+	};
+
+	// Generate 2d array for board and set to empty
+	generateBoardArray = () => {
+		const b = this.board;
+		const rows = this.NUM_ROWS;
+		const cols = this.NUM_COLS;
+		const empty = this.EMPTY;
+		for (let r = 0; r < rows; r++) {
+			b[r] = [];
+
+			for (let c = 0; c < cols; c++) {
+				b[r][c] = empty;
+			}
+		}
+	};
+
+	// Fill the board with empty blocks
+	drawBoard = () => {
+		const b = this.board;
+		const rows = this.NUM_ROWS;
+		const cols = this.NUM_COLS;
+
+		for (let r = 0; r < rows; r++) {
+			for (let c = 0; c < cols; c++) {
+				this.drawSquare(c, r, b[r][c]);
+			}
+		}
+	};
+
 	// Determine the board size based off of the window size
 	calculateSquareDimensions = () => {
-		if (!this.board.current || !this.boardWrapper.current) {
+		if (!this.boardRef.current || !this.boardWrapperRef.current) {
 			return;
 		}
-		this.ctx = this.board.current.getContext('2d');
-		const boardWrapper = this.boardWrapper.current;
+		this.ctx = this.boardRef.current.getContext('2d');
+		const boardWrapper = this.boardWrapperRef.current;
 		const bwWidth = boardWrapper.clientWidth;
 		const bwHeight = boardWrapper.clientHeight;
-		const board = this.board.current;
+		const board = this.boardRef.current;
 
 		if (bwWidth < bwHeight) {
 			let computedHeight = bwWidth * 2;
@@ -48,24 +96,54 @@ class Board extends Component {
 			board.height = bwHeight - 40;
 			board.width = bwHeight / 2 - 20;
 		}
-		this.setState({
-			squareSize: Math.floor(Math.floor(board.width) / this.NUM_COLS)
-		});
+		this.SQUARE_SIZE = Math.floor(Math.floor(board.width) / this.NUM_COLS);
 	};
 
 	// Function to draw a square to the board - should this instead be on the Piece prototype?
 	drawSquare = (x, y, color) => {
-		const { squareSize } = this.state;
-		this.ctx.fillStyle = color;
-		this.ctx.fillRect(x * squareSize, y * squareSize, squareSize, squareSize);
-		this.ctx.strokeStyle = 'black';
-		this.ctx.strokeRect(x * squareSize, y * squareSize, squareSize, squareSize);
+		const squareSize = this.SQUARE_SIZE;
+		const ctx = this.ctx;
+		ctx.fillStyle = color;
+		ctx.fillRect(x * squareSize, y * squareSize, squareSize, squareSize);
+		ctx.strokeStyle = 'black';
+		ctx.strokeRect(x * squareSize, y * squareSize, squareSize, squareSize);
+	};
+
+	// Collision detection function
+	checkCollisions = (x, y, piece) => {
+		const b = this.board;
+		const numRows = this.NUM_ROWS;
+		const numCols = this.NUM_COLS;
+		const empty = this.EMPTY;
+		const activeTetri = piece.activeTetri;
+		for (let r = 0; r < activeTetri.length; r++) {
+			for (let c = 0; c < activeTetri.length; c++) {
+				if (!activeTetri[r][c]) {
+					continue;
+				}
+				const newX = piece.x + c + x;
+				const newY = piece.y + r + y;
+				if (newX < 0 || newX >= numCols || newY >= numRows) {
+					return true;
+				}
+
+				if (newY < 0) {
+					continue;
+				}
+
+				if (b[newY][newX] !== empty) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	};
 
 	render() {
 		return (
-			<div className="Board" ref={this.boardWrapper}>
-				{this.props.gameStarted && <canvas ref={this.board} />}
+			<div className="Board" ref={this.boardWrapperRef}>
+				{this.props.gameStarted && <canvas ref={this.boardRef} />}
 			</div>
 		);
 	}

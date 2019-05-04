@@ -20,7 +20,8 @@ body {
 }
 
 .Board {
-	background-color: #0b0b23;
+	/* background-color: #0b0b23; */
+	background-color: #fff;
 	height: calc(100vh - 2px);
 	border: 1px solid white;
 	width: 80%;
@@ -35,5 +36,5 @@ body {
 }
 
 canvas {
-	border: 1px solid #fff;
+	border: 1px solid #000;
 }
