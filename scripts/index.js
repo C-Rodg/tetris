@@ -16,7 +16,7 @@ const gameStatus = {
 
 // Configuration
 const configuration = {
-	EMPTY: 'WHITE',
+	EMPTY: '#beaafb',
 	ROWS: 20,
 	COLS: 10,
 	squareSize: 20, // TODO: generate based off of window size
@@ -149,6 +149,4 @@ document.addEventListener('keydown', keyboardHandler, false);
 // Inject rendering engine for responsive game board
 // Style game:
 // -- mobile - add onscreen buttons
-// -- sidepanel colors, buttons
-// -- tetris - colors, background color
-// Add settings
+// -- sidepanel buttons, buttons, settings, and info

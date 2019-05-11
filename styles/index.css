@@ -20,9 +20,9 @@ body {
 }
 
 .board {
-	background-color: #0b0b23;
+	background-color: #13033e;
 	height: 100%;
-	border-right: 3px solid white;
+	border-right: 3px solid #7f65cf;
 	width: 80%;
 	display: flex;
 	align-items: center;
@@ -31,9 +31,11 @@ body {
 
 .dashboard {
 	width: 20%;
-	background-color: lightblue;
+	background-color: #13033e;
 }
 
 canvas {
 	border: 1px solid #000;
+	border-radius: 8px;
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.8);
 }

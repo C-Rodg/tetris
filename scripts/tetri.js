@@ -46,13 +46,13 @@ const getRandomTetriMonad = (function() {
 	const O_PIECE = [[[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]];
 
 	const TETRI = [
-		[S_PIECE, 'green'],
-		[Z_PIECE, 'blue'],
-		[I_PIECE, 'cyan'],
-		[O_PIECE, 'purple'],
-		[L_PIECE, 'orange'],
-		[T_PIECE, 'red'],
-		[J_PIECE, 'yellow']
+		[S_PIECE, '#DFFFA2'], // Green
+		[Z_PIECE, '#A8D9FF'], // Blue
+		[I_PIECE, '#A2FFD7'], // Green
+		[O_PIECE, '#FFD783'], // Orange
+		[L_PIECE, '#B453E5'], // Pink
+		[T_PIECE, '#FF7B46'], // Red
+		[J_PIECE, '#FEFFA2'] // Yellow
 	];
 
 	const getRandom = () => {
