@@ -19,7 +19,8 @@ const configuration = {
 	EMPTY: 'WHITE',
 	ROWS: 20,
 	COLS: 10,
-	squareSize: 20 // TODO: generate based off of window size
+	squareSize: 20, // TODO: generate based off of window size
+	gameSpeed: 1000
 };
 const board = [];
 let currentPiece = null;
@@ -130,7 +131,7 @@ function keyboardHandler(ev) {
 function startPieceDropping() {
 	const now = Date.now();
 	const delta = now - gameStatus.lastDropTime;
-	if (delta > 1000) {
+	if (delta > configuration.gameSpeed) {
 		currentPiece.moveDown();
 		gameStatus.lastDropTime = Date.now();
 	}
