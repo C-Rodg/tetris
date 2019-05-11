@@ -80,11 +80,12 @@ function startStopGame() {
 		if (!currentPiece) {
 			currentPiece = new Piece(...getRandomTetriMonad());
 		}
-		console.log(currentPiece);
 		gameStatus.isPaused = false;
 
 		if (gameStatus.gameOver) {
-			// TODO: reinitialize the board and start fresh
+			// Reinitialize board
+			initializeBoard();
+			drawCurrentBoard();
 			gameStatus.gameOver = false;
 		}
 		domElements.playPauseBtn.textContent = 'Pause';
@@ -118,6 +119,9 @@ function keyboardHandler(ev) {
 			break;
 		case 40:
 			currentPiece.moveDown();
+			break;
+		case 32:
+			currentPiece.goToBottom();
 			break;
 	}
 }

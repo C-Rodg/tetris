@@ -43,6 +43,13 @@ Piece.prototype.moveDown = function() {
 	}
 };
 
+// Movement - to bottom
+Piece.prototype.goToBottom = function() {
+	while (currentPiece === this) {
+		this.moveDown();
+	}
+};
+
 // Movement - left
 Piece.prototype.moveLeft = function() {
 	if (!this.willCollide(-1, 0, this.activeTetri)) {

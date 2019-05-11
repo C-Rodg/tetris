@@ -21,8 +21,8 @@ body {
 
 .board {
 	background-color: #0b0b23;
-	height: calc(100vh - 2px);
-	border: 1px solid white;
+	height: 100%;
+	border-right: 3px solid white;
 	width: 80%;
 	display: flex;
 	align-items: center;
