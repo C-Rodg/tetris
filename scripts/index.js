@@ -69,10 +69,6 @@ function drawSquare(row, col, color) {
 initializeBoard();
 drawCurrentBoard();
 
-// TODO:
-// Start dropping pieces
-// Inject rendering engine for responsive game board
-
 // Handler - Play or Pause game
 function startStopGame() {
 	if (gameStatus.isPaused) {
@@ -140,3 +136,8 @@ function startPieceDropping() {
 // Add event listeners
 domElements.playPauseBtn.addEventListener('click', startStopGame, false);
 document.addEventListener('keydown', keyboardHandler, false);
+
+// TODO:
+// Inject rendering engine for responsive game board
+// Style game - desktop & mobile (onscreen buttons)
+// Add settings
