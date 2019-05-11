@@ -72,6 +72,7 @@ drawCurrentBoard();
 // Handler - Play or Pause game
 function startStopGame() {
 	if (gameStatus.isPaused) {
+		console.log('starting game');
 		// Start the game
 		if (!gameStatus.lastDropTime) {
 			gameStatus.lastDropTime = Date.now();
@@ -79,6 +80,7 @@ function startStopGame() {
 		if (!currentPiece) {
 			currentPiece = new Piece(...getRandomTetriMonad());
 		}
+		console.log(currentPiece);
 		gameStatus.isPaused = false;
 
 		if (gameStatus.gameOver) {
@@ -86,6 +88,7 @@ function startStopGame() {
 			gameStatus.gameOver = false;
 		}
 		domElements.playPauseBtn.textContent = 'Pause';
+		startPieceDropping();
 	} else {
 		// Pause the game
 		gameStatus.isPaused = true;
@@ -95,7 +98,7 @@ function startStopGame() {
 }
 
 // Handler - keyboard press
-function keybaordHandler(ev) {
+function keyboardHandler(ev) {
 	if (gameStatus.isPaused) {
 		return;
 	}

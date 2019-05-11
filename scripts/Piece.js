@@ -123,13 +123,13 @@ Piece.prototype.lock = function() {
 		if (isFullRow) {
 			// Shift board down
 			for (let newRow = row; newRow > 1; newRow--) {
-				for (let newCol = 0; newCol < boardCols; c++) {
+				for (let newCol = 0; newCol < boardCols; newCol++) {
 					board[newRow][newCol] = board[newRow - 1][newCol];
 				}
 			}
 
 			// Add new top row
-			for (let newCol = 0; newCol < boardCols; c++) {
+			for (let newCol = 0; newCol < boardCols; newCol++) {
 				board[0][newCol] = empty;
 			}
 
