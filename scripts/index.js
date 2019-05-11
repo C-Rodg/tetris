@@ -116,4 +116,31 @@ Piece.prototype.rotate = function() {};
 
 Piece.prototype.lock = function() {};
 
-Piece.prototype.willCollide = function() {};
+Piece.prototype.willCollide = function(x, y, tetri) {
+	const boardCols = configuration.COLS;
+	const boardRows = configuration.ROWS;
+	const empty = configuration.EMPTY;
+	const tetriSize = tetri.length;
+	for (let row = 0; row < tetriSize; row++) {
+		for (let col = 0; col < tetriSize; col++) {
+			if (!tetri[row][col]) {
+				continue;
+			}
+			const newX = col + x + this.x;
+			const newY = row + y + this.y;
+
+			if (newX < 0 || newX >= boardCols || newY >= boardRows) {
+				return true;
+			}
+
+			if (newY < 0) {
+				continue;
+			}
+
+			if (board[newY][newX] !== empty) {
+				return true;
+			}
+		}
+	}
+	return false;
+};
