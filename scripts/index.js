@@ -26,7 +26,7 @@ function loopBoard(callback) {
 	const cols = configuration.COLS;
 	for (let row = 0; row < rows; row++) {
 		for (let col = 0; col < cols; col++) {
-			callback(board, row, col);
+			callback(row, col, board[row][col]);
 		}
 	}
 }
@@ -35,7 +35,7 @@ function loopBoard(callback) {
 function initializeBoard() {
 	// Callback function to run on each row-col
 	const emptyPiece = configuration.EMPTY;
-	const setAsEmpty = (board, row, col) => {
+	const setAsEmpty = (row, col, _) => {
 		board[row][col] = emptyPiece;
 	};
 
@@ -54,8 +54,7 @@ function drawCurrentBoard() {
 }
 
 // Draw a square using canvas
-function drawSquare(board, row, col) {
-	const color = board[row][col];
+function drawSquare(row, col, color) {
 	const squareSize = configuration.squareSize;
 	ctx.fillStyle = color;
 	ctx.fillRect(col * squareSize, row * squareSize, squareSize, squareSize);
@@ -83,6 +82,29 @@ function Piece(tetri, color) {
 	this.x = 3;
 	this.y = -2;
 }
+
+// Take specified color and translate tetri piece to canvas
+Piece.prototype.fill = function(color) {
+	const activeTetri = this.activeTetri;
+	const tetriSize = activeTetri.length;
+	for (let row = 0; row < tetriSize; row++) {
+		for (let col = 0; col < tetriSize; col++) {
+			if (activeTetri[row][col]) {
+				drawSquare(this.y + row, this.x + col, color);
+			}
+		}
+	}
+};
+
+// Draw the active tetri
+Piece.prototype.draw = function() {
+	this.fill(this.color);
+};
+
+// Hide the active tetri
+Piece.prototype.hide = function() {
+	this.fill(configuration.EMPTY);
+};
 
 Piece.prototype.moveDown = function() {};
 
