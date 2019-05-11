@@ -1,7 +1,10 @@
 // DOM
-const playPauseBtn = document.getElementById('button-pausePlay');
-const canvas = document.getElementById('canvas-tetris');
-const ctx = canvas.getContext('2d');
+const domElements = {
+	playPauseBtn: document.getElementById('button-pausePlay'),
+	score: document.getElementById('score'),
+	canvas: document.getElementById('canvas-tetris')
+};
+const ctx = domElements.canvas.getContext('2d');
 
 // Game status object
 const gameStatus = {
@@ -162,7 +165,62 @@ Piece.prototype.rotate = function() {
 	}
 };
 
-Piece.prototype.lock = function() {};
+// Lock pieces in place after moving down and colliding
+Piece.prototype.lock = function() {
+	const tetriSize = this.activeTetri.length;
+	for (let row = 0; row < tetriSize; row++) {
+		for (let col = 0; col < tetriSize; col++) {
+			if (!this.activeTetri[row][col]) {
+				continue;
+			}
+
+			if (this.y + row < 0) {
+				alert('GAME OVER');
+				gameStatus.gameOver = true;
+				break;
+			}
+
+			board[this.y + row][this.x + col] = this.color;
+		}
+	}
+	const boardRows = configuration.ROWS;
+	const boardCols = configuration.COLS;
+	const empty = configuration.EMPTY;
+
+	// Check for full rows
+	for (let row = 0; row < boardRows; row++) {
+		let isFullRow = true;
+		for (let col = 0; col < boardCols; col++) {
+			if (board[row][col] === empty) {
+				isFullRow = false;
+				break;
+			}
+		}
+
+		if (isFullRow) {
+			// Shift board down
+			for (let newRow = row; newRow > 1; newRow--) {
+				for (let newCol = 0; newCol < boardCols; c++) {
+					board[newRow][newCol] = board[newRow - 1][newCol];
+				}
+			}
+
+			// Add new top row
+			for (let newCol = 0; newCol < boardCols; c++) {
+				board[0][newCol] = empty;
+			}
+
+			// Increment score
+			gameStatus.score += 10;
+		}
+	}
+
+	// Done moving everything, draw to canvas
+	drawCurrentBoard();
+
+	// Show score
+	domElements.score.innerHTML = gameStatus.score;
+};
 
 Piece.prototype.willCollide = function(shiftX, shiftY, tetri) {
 	const boardCols = configuration.COLS;
