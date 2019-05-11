@@ -147,5 +147,8 @@ document.addEventListener('keydown', keyboardHandler, false);
 
 // TODO:
 // Inject rendering engine for responsive game board
-// Style game - desktop & mobile (onscreen buttons)
+// Style game:
+// -- mobile - add onscreen buttons
+// -- sidepanel colors, buttons
+// -- tetris - colors, background color
 // Add settings
