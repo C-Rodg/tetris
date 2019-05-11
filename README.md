@@ -1,6 +1,12 @@
-# Tetris React
+# Tetris
 
-A tetris game built with Javascript & React for use in the browser.
+A tetris game built with vanilla Javascript.
+
+## Concepts
+
+- Multi-dimensional arrays
+- Collision detection
+- Event listeners
 
 ### Contributors
 
