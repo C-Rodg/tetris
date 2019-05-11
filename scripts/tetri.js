@@ -1,5 +1,6 @@
-// 7 Tetri pieces each with their 4 rotations
+// Globally available function to call to create pieces
 const getRandomTetriMonad = (function() {
+	// 7 Tetri pieces each with their 4 rotations
 	const S_PIECE = [
 		[[0, 1, 1], [1, 1, 0], [0, 0, 0]],
 		[[0, 1, 0], [0, 1, 1], [0, 0, 1]],

@@ -106,17 +106,65 @@ Piece.prototype.hide = function() {
 	this.fill(configuration.EMPTY);
 };
 
-Piece.prototype.moveDown = function() {};
+// Movement - down
+Piece.prototype.moveDown = function() {
+	if (!this.willCollide(0, 1, this.activeTetri)) {
+		this.hide();
+		this.y += 1;
+		this.draw();
+	} else {
+		this.lock();
+		currentPiece = new Piece(...getRandomTetriMonad());
+	}
+};
 
-Piece.prototype.moveLeft = function() {};
+// Movement - left
+Piece.prototype.moveLeft = function() {
+	if (!this.willCollide(-1, 0, this.activeTetri)) {
+		this.hide();
+		this.x -= 1;
+		this.draw();
+	}
+};
 
-Piece.prototype.moveRight = function() {};
+// Movement - right
+Piece.prototype.moveRight = function() {
+	if (!this.willCollide(1, 0, this.activeTetri)) {
+		this.hide();
+		this.x += 1;
+		this.draw();
+	}
+};
 
-Piece.prototype.rotate = function() {};
+// Movement - rotate
+Piece.prototype.rotate = function() {
+	const boardCols = configuration.COLS;
+	const nextTetriIdx = (this.tetriN + 1) % this.tetri.length;
+	const nextTetri = this.tetri[nextTetriIdx];
+	let shift = 0;
+
+	if (this.willCollide(0, 0, nextTetri)) {
+		if (this.x > boardCols / 2) {
+			// right wall
+			shift = -1;
+		} else {
+			// left wall
+			shift = 1;
+		}
+	}
+
+	if (!this.willCollide(shift, 0, nextTetri)) {
+		this.hide();
+		this.x += shift;
+		this.tetriN = nextTetriIdx;
+		this.activeTetri = nextTetri;
+		this.draw();
+	}
+};
 
 Piece.prototype.lock = function() {};
 
-Piece.prototype.willCollide = function(x, y, tetri) {
+Piece.prototype.willCollide = function(shiftX, shiftY, tetri) {
 	const boardCols = configuration.COLS;
 	const boardRows = configuration.ROWS;
 	const empty = configuration.EMPTY;
@@ -126,8 +174,8 @@ Piece.prototype.willCollide = function(x, y, tetri) {
 			if (!tetri[row][col]) {
 				continue;
 			}
-			const newX = col + x + this.x;
-			const newY = row + y + this.y;
+			const newX = col + shiftX + this.x;
+			const newY = row + shiftY + this.y;
 
 			if (newX < 0 || newX >= boardCols || newY >= boardRows) {
 				return true;
