@@ -71,9 +71,9 @@ initializeBoard();
 drawCurrentBoard();
 
 // Handler - Play or Pause game
-function startStopGame() {
+function startStopGame(ev) {
 	if (gameStatus.isPaused) {
-		console.log('starting game');
+		this.blur();
 		// Start the game
 		if (!gameStatus.lastDropTime) {
 			gameStatus.lastDropTime = Date.now();
@@ -149,4 +149,4 @@ document.addEventListener('keydown', keyboardHandler, false);
 // Inject rendering engine for responsive game board
 // Style game:
 // -- mobile - add onscreen buttons
-// -- sidepanel buttons, buttons, settings, and info
+// -- sidepanel buttons, buttons, settings, and info - game speed
