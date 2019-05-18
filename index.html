@@ -8,6 +8,10 @@
 		/>
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>TetrisJS</title>
+		<link
+			href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+			rel="stylesheet"
+		/>
 		<link rel="stylesheet" type="text/css" href="./styles/index.css" />
 	</head>
 	<body>
@@ -16,9 +20,9 @@
 				<canvas id="canvas-tetris" width="200" height="400"></canvas>
 			</div>
 			<div class="dashboard">
-				<button type="button" id="button-pausePlay">Start Game</button>
-				<div id="score">0</div>
-				<button type="button">Settings</button>
+				<div id="score" class="score">0</div>
+				<button id="button-pausePlay" class="btn">Start Game</button>
+				<button id="button-settings" class="btn">Settings</button>
 			</div>
 		</div>
 		<script type="text/javascript" src="./scripts/tetri.js"></script>
