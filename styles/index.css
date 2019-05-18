@@ -123,3 +123,11 @@ canvas {
 .game-input:focus {
 	outline: 0;
 }
+
+.gameover-box {
+	text-align: center;
+	border: 0;
+}
+.gameover-box h1 {
+	text-transform: uppercase;
+}

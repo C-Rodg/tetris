@@ -104,7 +104,6 @@ Piece.prototype.lock = function() {
 			}
 
 			if (this.y + row < 0) {
-				alert('GAME OVER');
 				gameStatus.gameOver = true;
 				gameStatus.isPaused = true;
 				break;

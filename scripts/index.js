@@ -5,6 +5,7 @@ const domElements = {
 	settingsBox: document.getElementById('settings-box'),
 	gameSpeedInput: document.getElementById('settings-gamespeed'),
 	gameOverBox: document.getElementById('gameover-box'),
+	playAgainBtn: document.getElementById('button-play-again'),
 	playPauseBtn: document.getElementById('button-pausePlay'),
 	score: document.getElementById('score'),
 	canvas: document.getElementById('canvas-tetris'),
@@ -111,6 +112,23 @@ function drawSquare(row, col, color) {
 initializeBoard();
 setCanvasDimensions();
 
+// Show game over
+function showGameOver() {
+	domElements.canvas.classList.add('hidden');
+	domElements.gameOverBox.classList.remove('hidden');
+	domElements.playPauseBtn.textContent = 'Start Game';
+}
+
+// Handler - play again
+function handlePlayAgain() {
+	domElements.gameOverBox.classList.add('hidden');
+	domElements.canvas.classList.remove('hidden');
+
+	initializeBoard();
+	setCanvasDimensions();
+	startStopGame();
+}
+
 // Handler - show settings
 function showSettingsView() {
 	if (!gameStatus.isPaused) {
@@ -118,6 +136,7 @@ function showSettingsView() {
 	}
 	domElements.gameSpeedInput.value = configuration.gameSpeed;
 	domElements.canvas.classList.add('hidden');
+	domElements.gameOverBox.classList.add('hidden');
 	domElements.settingsBox.classList.remove('hidden');
 }
 
@@ -207,6 +226,10 @@ function startPieceDropping() {
 	if (!gameStatus.isPaused) {
 		requestAnimationFrame(startPieceDropping);
 	}
+
+	if (gameStatus.gameOver) {
+		showGameOver();
+	}
 }
 
 // Add event listeners
@@ -220,8 +243,8 @@ domElements.settingsCloseBtn.addEventListener(
 	false
 );
 domElements.gameSpeedInput.addEventListener('change', handleGameSpeedChange);
+domElements.playAgainBtn.addEventListener('click', handlePlayAgain);
 
 // TODO:
 // Style game:
 // -- mobile - add onscreen buttons
-// -- sidepanel buttons, buttons, settings, and info - game speed
