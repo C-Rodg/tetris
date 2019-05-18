@@ -1,11 +1,25 @@
 // DOM
 const domElements = {
+	settingsBtn: document.getElementById('button-settings'),
+	settingsCloseBtn: document.getElementById('button-settings-close'),
+	settingsBox: document.getElementById('settings-box'),
+	gameSpeedInput: document.getElementById('settings-gamespeed'),
+	gameOverBox: document.getElementById('gameover-box'),
 	playPauseBtn: document.getElementById('button-pausePlay'),
 	score: document.getElementById('score'),
 	canvas: document.getElementById('canvas-tetris'),
 	board: document.getElementById('board')
 };
 const ctx = domElements.canvas.getContext('2d');
+
+// Game speed map
+const gameSpeedMap = {
+	'1': 1400,
+	'2': 950,
+	'3': 700,
+	'4': 500,
+	'5': 190
+};
 
 // Game status object
 const gameStatus = {
@@ -20,8 +34,8 @@ const configuration = {
 	EMPTY: '#beaafb',
 	ROWS: 20,
 	COLS: 10,
-	squareSize: 20, // TODO: generate based off of window size
-	gameSpeed: 1000
+	squareSize: 20,
+	gameSpeed: '2'
 };
 const board = [];
 let currentPiece = null;
@@ -97,8 +111,35 @@ function drawSquare(row, col, color) {
 initializeBoard();
 setCanvasDimensions();
 
+// Handler - show settings
+function showSettingsView() {
+	if (!gameStatus.isPaused) {
+		startStopGame();
+	}
+	domElements.gameSpeedInput.value = configuration.gameSpeed;
+	domElements.canvas.classList.add('hidden');
+	domElements.settingsBox.classList.remove('hidden');
+}
+
+// Handler - close settings
+function handleSettingsClose() {
+	domElements.settingsBox.classList.add('hidden');
+	domElements.canvas.classList.remove('hidden');
+}
+
+// Handler - change game speed
+function handleGameSpeedChange(ev) {
+	const val = ev.target.value;
+	if (gameSpeedMap[val] !== undefined) {
+		configuration.gameSpeed = val;
+	}
+}
+
 // Handler - Play or Pause game
 function startStopGame(ev) {
+	if (!domElements.settingsBox.classList.contains('hidden')) {
+		handleSettingsClose();
+	}
 	if (gameStatus.isPaused) {
 		this.blur();
 		// Start the game
@@ -158,7 +199,7 @@ function keyboardHandler(ev) {
 function startPieceDropping() {
 	const now = Date.now();
 	const delta = now - gameStatus.lastDropTime;
-	if (delta > configuration.gameSpeed) {
+	if (delta > gameSpeedMap[configuration.gameSpeed]) {
 		currentPiece.moveDown();
 		gameStatus.lastDropTime = Date.now();
 	}
@@ -172,6 +213,13 @@ function startPieceDropping() {
 domElements.playPauseBtn.addEventListener('click', startStopGame, false);
 document.addEventListener('keydown', keyboardHandler, false);
 window.addEventListener('resize', setCanvasDimensions);
+domElements.settingsBtn.addEventListener('click', showSettingsView, false);
+domElements.settingsCloseBtn.addEventListener(
+	'click',
+	handleSettingsClose,
+	false
+);
+domElements.gameSpeedInput.addEventListener('change', handleGameSpeedChange);
 
 // TODO:
 // Style game:

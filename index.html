@@ -18,6 +18,17 @@
 		<div class="app">
 			<div class="board" id="board">
 				<canvas id="canvas-tetris" width="200" height="400"></canvas>
+				<div id="settings-box" class="box hidden">
+					<button type="button" class="close" id="button-settings-close">
+						X
+					</button>
+					<div>Game Speed (1-5):</div>
+					<input type="text" id="settings-gamespeed" class="game-input" />
+				</div>
+				<div id="gameover-box" class="box hidden">
+					Game over
+					<button type="button">Play Again?</button>
+				</div>
 			</div>
 			<div class="dashboard">
 				<div id="score" class="score">0</div>

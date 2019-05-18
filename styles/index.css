@@ -26,6 +26,10 @@ button {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.hidden {
+	display: none;
+}
+
 .app {
 	height: 100vh;
 	display: flex;
@@ -81,4 +85,41 @@ canvas {
 	color: #fff;
 	border-bottom: 3px solid rgba(255, 255, 255, 0.5);
 	margin-bottom: 3rem;
+}
+
+.box {
+	border: 3px solid #7f65cf;
+	border-radius: 4px;
+	padding: 25px 15px;
+	color: #7f65cf;
+	position: relative;
+}
+
+.close {
+	background: transparent;
+	color: #7f65ce;
+	border-radius: 50%;
+	border: 0;
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+	position: absolute;
+	right: 4px;
+	top: 8px;
+}
+
+.close:focus {
+	outline: 0;
+}
+
+.game-input {
+	background: transparent;
+	border-radius: 4px;
+	border: 3px solid #7f65cf;
+	color: #7f65cf;
+	padding: 5px 6px;
+}
+
+.game-input:focus {
+	outline: 0;
 }
