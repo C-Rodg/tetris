@@ -2,7 +2,8 @@
 const domElements = {
 	playPauseBtn: document.getElementById('button-pausePlay'),
 	score: document.getElementById('score'),
-	canvas: document.getElementById('canvas-tetris')
+	canvas: document.getElementById('canvas-tetris'),
+	board: document.getElementById('board')
 };
 const ctx = domElements.canvas.getContext('2d');
 
@@ -24,6 +25,32 @@ const configuration = {
 };
 const board = [];
 let currentPiece = null;
+
+// Make canvas responsive
+function setCanvasDimensions() {
+	const boardWidth = domElements.board.clientWidth - 60;
+	const boardHeight = domElements.board.clientHeight - 60;
+	let canvasHeight = 0;
+	let canvasWidth = 0;
+	if (boardWidth >= boardHeight / 2) {
+		// use height as base
+		canvasHeight = boardHeight;
+		canvasWidth = canvasHeight / 2;
+	} else {
+		// use width as base
+		canvasWidth = boardWidth;
+		canvasHeight = canvasWidth * 2;
+	}
+
+	domElements.canvas.width = canvasWidth;
+	domElements.canvas.height = canvasHeight;
+
+	// Set square size
+	configuration.squareSize = canvasWidth / 10;
+
+	// Draw the board
+	drawCurrentBoard();
+}
 
 // Helper - loop over the board
 function loopBoard(callback) {
@@ -68,7 +95,7 @@ function drawSquare(row, col, color) {
 }
 
 initializeBoard();
-drawCurrentBoard();
+setCanvasDimensions();
 
 // Handler - Play or Pause game
 function startStopGame(ev) {
@@ -144,9 +171,9 @@ function startPieceDropping() {
 // Add event listeners
 domElements.playPauseBtn.addEventListener('click', startStopGame, false);
 document.addEventListener('keydown', keyboardHandler, false);
+window.addEventListener('resize', setCanvasDimensions);
 
 // TODO:
-// Inject rendering engine for responsive game board
 // Style game:
 // -- mobile - add onscreen buttons
 // -- sidepanel buttons, buttons, settings, and info - game speed
